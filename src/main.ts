@@ -15,7 +15,7 @@ const config: Phaser.Types.Core.GameConfig = {
     height: GAME_CONFIG.height,
     backgroundColor: '#1a1a2e',
     scale: {
-        mode: Phaser.Scale.EXPAND, // Fills viewport by expanding one axis (no letterboxing, no crop)
+        mode: Phaser.Scale.FIT, // Scales canvas to fit parent while preserving 16:9 aspect ratio
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     scene: [PreloadScene, GameScene]
