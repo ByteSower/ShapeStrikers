@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output (deployed via CI, not committed)
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dev/docs files - NOT part of the game
+PROGRESS.md
+USER_FEEDBACK_REVIEW.md
+SCROLLABLE_UI_PATTERNS.md
+Shape_Strikers_animations/
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.*
