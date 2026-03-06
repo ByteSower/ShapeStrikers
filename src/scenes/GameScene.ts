@@ -174,7 +174,7 @@ export class GameScene extends Phaser.Scene {
         this.grid = new Grid(this);
         
         // Reposition grid to center in viewport
-        this.grid.reposition(width, height, 300);
+        this.grid.reposition(width, height, width < 900 ? 0 : 300);
         
         // Show map name
         this.showMapName();
@@ -274,23 +274,24 @@ export class GameScene extends Phaser.Scene {
             this.backgroundImage.setScale(scale);
         }
         
+        // Use smaller panel reservation on narrow screens
+        const shopPanelWidth = width < 900 ? 0 : 300;
+        
         // Reposition grid to center in new viewport
         if (this.grid) {
-            this.grid.reposition(width, height, 300);
+            this.grid.reposition(width, height, shopPanelWidth);
             
-            // Update all unit positions to match new grid positions
-            for (const unit of this.playerUnits) {
-                if (unit.isAlive && unit.container) {
+            // Kill any active tweens on units and reposition to correct grid cells
+            const repositionUnit = (unit: Unit) => {
+                if (unit.container) {
+                    this.tweens.killTweensOf(unit.container);
                     const pos = this.grid.gridToWorld(unit.gridPosition.col, unit.gridPosition.row);
                     unit.container.setPosition(pos.x, pos.y);
                 }
-            }
-            for (const unit of this.enemyUnits) {
-                if (unit.isAlive && unit.container) {
-                    const pos = this.grid.gridToWorld(unit.gridPosition.col, unit.gridPosition.row);
-                    unit.container.setPosition(pos.x, pos.y);
-                }
-            }
+            };
+            
+            for (const unit of this.playerUnits) repositionUnit(unit);
+            for (const unit of this.enemyUnits) repositionUnit(unit);
         }
         
         // Update unit info panel position
@@ -300,7 +301,7 @@ export class GameScene extends Phaser.Scene {
         
         // Update action buttons position
         if (this.actionButtons) {
-            const buttonX = (width - 300) / 2;
+            const buttonX = (width - shopPanelWidth) / 2;
             this.actionButtons.setPosition(buttonX, height - 90);
         }
         
