@@ -174,7 +174,7 @@ export class GameScene extends Phaser.Scene {
         this.grid = new Grid(this);
         
         // Reposition grid to center in viewport
-        this.grid.reposition(width, height, width < 900 ? 0 : 300);
+        this.grid.reposition(width, height, 300);
         
         // Show map name
         this.showMapName();
@@ -261,50 +261,10 @@ export class GameScene extends Phaser.Scene {
         });
     }
     
-    private handleResize(gameSize: Phaser.Structs.Size): void {
-        const width = gameSize.width;
-        const height = gameSize.height;
-        
-        // Update background image to fill new viewport (if exists)
-        if (this.backgroundImage) {
-            this.backgroundImage.setPosition(width / 2, height / 2);
-            const scaleX = width / this.backgroundImage.width;
-            const scaleY = height / this.backgroundImage.height;
-            const scale = Math.max(scaleX, scaleY);
-            this.backgroundImage.setScale(scale);
-        }
-        
-        // Use smaller panel reservation on narrow screens
-        const shopPanelWidth = width < 900 ? 0 : 300;
-        
-        // Reposition grid to center in new viewport
-        if (this.grid) {
-            this.grid.reposition(width, height, shopPanelWidth);
-            
-            // Kill any active tweens on units and reposition to correct grid cells
-            const repositionUnit = (unit: Unit) => {
-                if (unit.container) {
-                    this.tweens.killTweensOf(unit.container);
-                    const pos = this.grid.gridToWorld(unit.gridPosition.col, unit.gridPosition.row);
-                    unit.container.setPosition(pos.x, pos.y);
-                }
-            };
-            
-            for (const unit of this.playerUnits) repositionUnit(unit);
-            for (const unit of this.enemyUnits) repositionUnit(unit);
-        }
-        
-        // Update unit info panel position
-        if (this.unitInfoPanel) {
-            this.unitInfoPanel.setPosition(width - 150, 600);
-        }
-        
-        // Update action buttons position
-        if (this.actionButtons) {
-            const buttonX = (width - shopPanelWidth) / 2;
-            this.actionButtons.setPosition(buttonX, height - 90);
-        }
-        
+    private handleResize(_gameSize: Phaser.Structs.Size): void {
+        // With FIT mode, game coordinates stay fixed at 1280x720.
+        // Phaser handles all CSS scaling to fill the viewport while
+        // preserving the 16:9 aspect ratio. No repositioning needed.
     }
     
     private showMapName(): void {
