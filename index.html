@@ -13,7 +13,7 @@
       width: 100%; 
       height: 100%; 
       overflow: hidden; 
-      background: #1a1a2e;  /* Match game background */
+      background: #1a1a2e;
     }
     #game-container {
       display: flex;
@@ -24,9 +24,78 @@
       background: linear-gradient(135deg, #1a1a2e 0%, #0d1526 50%, #1a1a2e 100%);
     }
     canvas { display: block; }
+
+    /* Mobile / Portrait orientation warning overlay */
+    #orientation-warning {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: linear-gradient(135deg, #1a1a2e 0%, #0d1526 50%, #1a1a2e 100%);
+      color: #e0e0e0;
+      font-family: 'Rajdhani', sans-serif;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      gap: 1.2rem;
+    }
+    #orientation-warning .icon {
+      font-size: 4rem;
+      animation: rotate-hint 2s ease-in-out infinite;
+    }
+    #orientation-warning h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffcc44;
+      margin: 0;
+    }
+    #orientation-warning p {
+      font-size: 1.1rem;
+      max-width: 320px;
+      line-height: 1.5;
+      color: #aaa;
+    }
+    #orientation-warning .dismiss-btn {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1.5rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ccc;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #orientation-warning .dismiss-btn:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    @keyframes rotate-hint {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(90deg); }
+      50% { transform: rotate(90deg); }
+      75% { transform: rotate(0deg); }
+    }
+
+    /* Show warning when viewport is portrait or too narrow */
+    @media (orientation: portrait), (max-width: 840px) {
+      #orientation-warning { display: flex; }
+    }
+    /* Hide if dismissed (JS adds class) */
+    #orientation-warning.dismissed { display: none !important; }
   </style>
 </head>
 <body>
+  <!-- Orientation / screen-size warning -->
+  <div id="orientation-warning">
+    <div class="icon">📱↪🖥️</div>
+    <h2>Best on Desktop or Landscape</h2>
+    <p>Shape Strikers is designed for wider screens. For the best experience, rotate your device to landscape or play on a desktop browser.</p>
+    <button class="dismiss-btn" onclick="document.getElementById('orientation-warning').classList.add('dismissed')">Continue Anyway</button>
+  </div>
+
   <div id="game-container"></div>
   <script type="module" src="/src/main.ts"></script>
 </body>
