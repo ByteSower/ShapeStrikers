@@ -319,7 +319,7 @@ export class PreloadScene extends Phaser.Scene {
         optPanel.add(panelDim);
         
         const panelW = 360;
-        const panelH = 260;
+        const panelH = 340;
         const panelBg = this.add.graphics();
         panelBg.fillStyle(0x0d1526, 0.97);
         panelBg.fillRoundedRect(-panelW / 2, -panelH / 2, panelW, panelH, 14);
@@ -379,6 +379,24 @@ export class PreloadScene extends Phaser.Scene {
             flashEnabled = val;
             localStorage.setItem('ss_screen_flash', val ? 'true' : 'false');
         });
+        
+        // Divider line
+        const dividerY = 58;
+        const divider = this.add.graphics();
+        divider.lineStyle(1, 0x4488aa, 0.4);
+        divider.lineBetween(-panelW / 2 + 20, dividerY, panelW / 2 - 20, dividerY);
+        optPanel.add(divider);
+        
+        // Feedback / Discord section
+        const feedbackText = this.add.text(0, 76, 'Found a bug or have feedback?', {
+            fontSize: '13px', fontFamily: 'Rajdhani, sans-serif', color: '#8899aa'
+        }).setOrigin(0.5);
+        optPanel.add(feedbackText);
+        
+        const discordText = this.add.text(0, 98, '💬  Discord: ByteSower', {
+            fontSize: '15px', fontFamily: 'Rajdhani, sans-serif', color: '#7289da', fontStyle: 'bold'
+        }).setOrigin(0.5);
+        optPanel.add(discordText);
         
         // Close button
         const closeBtnY = panelH / 2 - 36;
