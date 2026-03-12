@@ -2,6 +2,8 @@
 
 **A tactical auto-battler where geometric shapes wage war.** Build your army, master elemental synergies, and conquer 15 waves of increasingly dangerous enemies — culminating in epic multi-phase boss fights.
 
+⚠️ THIS VERSION OF SHAPE SRIKERS IS NOT BEING MAINTAINED ANYMORE PLEASE VISIT THE NEW REPO @https://github.com/ByteSower/ShapeStrikers-no-phaser- ⚠️
+
 > 🎮 **[Play Now](https://bytesower.github.io/ShapeStrikers/)** — runs in any modern browser, no install needed.
 
 ---
